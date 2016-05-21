@@ -2,7 +2,7 @@
 # Cookbook Name:: zoneminder
 # Recipe:: default
 #
-# Copyright 2013-14, Chef Software, Inc.
+# Copyright 2013-2016, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,17 +19,13 @@
 
 package 'zoneminder'
 
-# Following http://www.zoneminder.com/wiki/index.php/Documentation#Installation_from_a_.deb
-# Most of those changes don't appear applicable with Ubuntu 12.04's package
-
 # Link Apache
-link "/etc/apache2/conf.d/zoneminder.conf" do
-  to "/etc/zm/apache.conf"
+link '/etc/apache2/conf.d/zoneminder.conf' do
+  to '/etc/zm/apache.conf'
 end
 
 # Restart Apache
-execute "apache2ctl restart" do
+execute 'apache2ctl restart' do
   action :nothing
-  subscribes :run, "link[/etc/apache2/conf.d/zoneminder.conf]"
+  subscribes :run, 'link[/etc/apache2/conf.d/zoneminder.conf]'
 end
-
