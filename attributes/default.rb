@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: zoneminder
-# Recipe:: default
+# Attribute:: default
 #
-# Copyright 2013-2016, Chef Software, Inc.
+# Copyright 2016, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,22 +17,4 @@
 # limitations under the License.
 #
 
-apt_repository 'zoneminder' do
-  uri          'ppa:iconnor/zoneminder'
-  distribution node['lsb']['codename']
-  only_if { node['platform'] == 'ubuntu' && node['zoneminder']['use_ppa'] }
-  components %w(main)
-end
-
-package 'zoneminder'
-
-# Link Apache
-link '/etc/apache2/conf.d/zoneminder.conf' do
-  to '/etc/zm/apache.conf'
-end
-
-# Restart Apache
-execute 'apache2ctl restart' do
-  action :nothing
-  subscribes :run, 'link[/etc/apache2/conf.d/zoneminder.conf]'
-end
+default['zoneminder']['use_ppa'] = 'true'

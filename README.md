@@ -1,17 +1,22 @@
 # zoneminder Cookbook
 
-Installs and configures the package `zoneminder`.
+Installs and configures the package `zoneminder` on Debian/Ubuntu systems. Note that the zoneminder package will also install mysql and apache2 servers as a dependency.
 
 Monitors are stored in the database instead of conf files, so configuration is mostly manual.
 
 ## Requirements
+
 ### Platforms
-- Debian/Ubuntu
+
+- Debian (requires jessie-backports or wheezy-backports repos to be enabled)
+- Ubuntu 12.04-16.04
 
 ### Chef
+
 - Chef 11+
 
 ### Cookbooks
+
 - apt
 
 ## Usage
