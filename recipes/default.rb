@@ -26,13 +26,26 @@ end
 
 package 'zoneminder'
 
-# Link Apache
-link '/etc/apache2/conf.d/zoneminder.conf' do
-  to '/etc/zm/apache.conf'
+package 'php-gd' do
+  package_name node['platform_version'].to_i >= 16 ? 'php7.0-gd' : 'php5-gd'
+end
+
+execute 'a2enconf zoneminder' do
+  not_if { ::File.exist?('/etc/apache2/conf-enabled/zoneminder')}
+end
+
+apache_module 'cgi'
+apache_module 'rewrite'
+
+# fix bad permissions from the PPA
+file '/etc/zm/zm.conf' do
+  mode '0640'
+  user 'www-data'
+  group 'www-data'
 end
 
 # Restart Apache
 execute 'apache2ctl restart' do
   action :nothing
-  subscribes :run, 'link[/etc/apache2/conf.d/zoneminder.conf]'
+  subscribes :run, 'execute[a2enconf zoneminder]'
 end
