@@ -18,3 +18,4 @@
 #
 
 default['zoneminder']['use_ppa'] = 'true'
+default['apache']['mpm'] = 'prefork'
